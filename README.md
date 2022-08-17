@@ -15,10 +15,15 @@ This repo has two main purposes:
 
 1. Python 3.8.
 2. SDV 0.16.
-3. Pandas,
+3. Pandas.
 
 # How to use
 
 1. Download the Alibaba 2018 cluster trace batch_task.csv file (http://clusterdata2018pubcn.oss-cn-beijing.aliyuncs.com/batch_task.tar.gz) and uncompress/paste it in the repository's **data** folder (the name must be **batch_task.csv**).
-2. Run the **preprocess.py**, which will create a file **processed_batch_task.csv** in the **data** folder.
-3. Tune the parameters for the training in **train.py** (if needed) and run it.
+2. Insert the following line as header of the csv file: task_name,instance_num,job_name,task_type,status,start_time,end_time,plan_cpu,plan_mem
+3. Run the **preprocess.py**, which will create a file **processed_batch_task.csv** in the **data** folder.
+4. Tune the parameters for the training in **train.py** (if needed) and run it.
+
+# Pre-process Result
+
+The result of the pre-process is this file (8 days): https://uses0-my.sharepoint.com/:u:/g/personal/afdez_us_es/ESv9EOxfeG1Nq-9pdhN53P4BwMBLDWkKToBoMMX-D2nKFw?e=f7hidL
