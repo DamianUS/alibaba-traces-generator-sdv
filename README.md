@@ -11,6 +11,12 @@ This repo has two main purposes:
     7. Transform the start_time from intenger values representing the seconds from the start of the trace to a datetime value such as: 2022-01-01 00:00:00 + start_time seconds. This column is formatted (in Python style): "%Y-%m-%d %H:%M:%S".
 2. **train.py**: Train an SDV PAR model (https://sdv.dev/SDV/user_guides/timeseries/par.html).
 
+# Requirements
+
+1. Python 3.8.
+2. SDV 0.16.
+3. Pandas,
+
 # How to use
 
 1. Download the Alibaba 2018 cluster trace batch_task.csv file (http://clusterdata2018pubcn.oss-cn-beijing.aliyuncs.com/batch_task.tar.gz) and uncompress/paste it in the repository's **data** folder (the name must be **batch_task.csv**).
