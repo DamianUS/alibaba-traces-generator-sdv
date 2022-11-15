@@ -34,10 +34,10 @@ print('Diccionario de vms cargado con un total de ' + str(len(vm_ids_dict)) + ' 
 
 
 
-for hour in range(1,169):
-    print("Procesando hora "+str(hour))
-    print("Leyendo csv:",'/home/afdez/trazas_azure/csvs/vm_cpu_readings_hour-'+str(hour)+'.csv')
-    day_df = pd.read_csv('/home/afdez/trazas_azure/csvs/vm_cpu_readings_hour-' + str(hour) + '.csv', header=None)
+for halfday in range(57, 61):
+    print("Procesando hora " + str(halfday))
+    print("Leyendo csv:",'/home/afdez/trazas_azure/segunda_tanda/uncompressed_47-195/week5/vm_cpu_readings_halfday-' + str(halfday) + '.csv')
+    day_df = pd.read_csv('/home/afdez/trazas_azure/segunda_tanda/uncompressed_47-195/week5/vm_cpu_readings_halfday-' + str(halfday) + '.csv', header=None)
     print("Leido csv")
 
     # print(day_df.head())
@@ -60,5 +60,5 @@ for hour in range(1,169):
     print("Empieza computación mem")
     day_df['mem'] = day_df.apply(lambda row: vm_ids_dict[row[1]][1], axis=1)
     print("Termina computando mem")
-    print (day_df.head())
-    day_df.to_csv('/home/afdez/trazas_azure/csvs/vm_cpu_readings_hour-' + str(hour) + '_processed_cpu_mem.csv', header=False, index=False)
+    #print (day_df.head())
+    day_df.to_csv('/home/afdez/trazas_azure/segunda_tanda/uncompressed_47-195/week5/vm_cpu_readings_halfday-' + str(halfday) + '_processed_cpu_mem.csv', header=False, index=False)

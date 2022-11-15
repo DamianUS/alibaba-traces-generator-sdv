@@ -13,7 +13,7 @@ def save_sample_to_csv(generated_sample, file_name):
 
 
 def initialize(trace):
-    if (args.trace == 'alibaba2018'):
+    if trace == 'alibaba2018':
         dataset_info = {
             "timestamp_frequency_secs": 10,
             "column_config": {
@@ -39,7 +39,7 @@ def initialize(trace):
                 }
             }
         }
-    elif (args.trace == 'google2019'):
+    elif trace == 'google2019':
         dataset_info = {
             "timestamp_frequency_secs": 300,
             "column_config": {
@@ -63,7 +63,7 @@ def initialize(trace):
                 }
             }
         }
-    elif (args.trace == 'azure_v2'):
+    elif trace == 'azure_v2':
         dataset_info = {
             "timestamp_frequency_secs": 300,
             "column_config": {
@@ -75,7 +75,7 @@ def initialize(trace):
                 }
             }
         }
-    elif (args.trace == 'reddit'):
+    elif trace == 'reddit':
         dataset_info = {
             "timestamp_frequency_secs": 3600,
             "column_config": {
