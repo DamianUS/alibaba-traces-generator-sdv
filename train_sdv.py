@@ -119,6 +119,7 @@ def main(args_params):
 
     model.fit(data)
     experiment_root_directory_name = save_experiment_files(experiment_parameters, model)
+    print ("Experiment data saved in", experiment_root_directory_name)
 
     generate_samples_from_model(experiment_parameters.seq_len, experiment_parameters.n_samples, experiment_root_directory_name, model)
 
