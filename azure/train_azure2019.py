@@ -103,21 +103,23 @@ def main(args):
             "subtype": 'float'
         }
     }
-    Namespace = collections.namedtuple('Parameters', 'epochs sample_size n_samples trace seq_len ')
-    experiment_parameters = Namespace(epochs=args.epochs, sample_size=args.sample_size, n_samples=args.n_samples, trace=args.trace, seq_len=args.seq_len )
+    Namespace = collections.namedtuple('Parameters', 'iteration sample_size n_samples data_name seq_len ')
+    experiment_parameters = Namespace(iteration=args.epochs, sample_size=args.sample_size, n_samples=args.n_samples, data_name=args.trace, seq_len=args.seq_len )
 
     model = PAR(
         field_types=field_types,
-        epochs=experiment_parameters.epochs,
+        epochs=experiment_parameters.iteration,
         sample_size=experiment_parameters.sample_size,
         verbose=True,
     )
 
-
     model.fit(data)
-    experiment_root_directory_name = "experiments/" + experiment_parameters.trace + '_epochs-' + str(experiment_parameters.epochs) + '-' + datetime.now().strftime("%j-%Y-%H-%M") + "/"
+    experiment_root_directory_name = "experiments/" + experiment_parameters.data_name + '_epochs-' + str(experiment_parameters.iteration) + '-' + datetime.now().strftime("%j-%Y-%H-%M") + "/"
     generated_data_directory_name = experiment_root_directory_name + "generated_data/"
+    model_directory_name = experiment_root_directory_name + "model/"
     os.makedirs(generated_data_directory_name, exist_ok=True)
+    os.makedirs(model_directory_name, exist_ok=True)
+    model.save(model_directory_name+'model.pkl')
     parameters_text_file = open(experiment_root_directory_name + "parameters.txt", "w")
     parameters_text_file.write(repr(experiment_parameters))
     metadata_text_file = open(experiment_root_directory_name + "metadata.txt", "w")
@@ -129,8 +131,6 @@ def main(args):
     for i in range(experiment_parameters.n_samples):
         generated_sample = model.sample(sequence_length=experiment_parameters.seq_len)
         save_sample_to_csv(generated_sample, generated_data_directory_name+"sample_"+ str(i) +".csv")
-
-
 
 if __name__ == '__main__':
     # Inputs for the main function
