@@ -132,6 +132,8 @@ def generate_samples_from_model(seq_len,n_samples, experiment_root_directory_nam
             generated_sample = model.sample(sequence_length=seq_len_size)
             save_sample_to_csv(generated_sample, generated_data_directory_name + "sample_" + str(i) + ".csv")
 
+    print ("Samples saved in", generated_data_directory_name)
+
 
 def save_experiment_files(experiment_parameters, model):
     experiment_root_directory_name = experiment_parameters.data_name + "/experiments/" + experiment_parameters.data_name + '_epochs-' + str(
