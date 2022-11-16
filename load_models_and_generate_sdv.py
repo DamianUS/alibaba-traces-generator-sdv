@@ -57,7 +57,7 @@ def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, expe
     try:
         experiment_dir_parent = os.path.dirname(experiment_dir)
         print("Processing directory ", experiment_dir)
-        cloned_experiment_dir = experiment_dir_parent + '/seq_len-' + str(seq_len) + '_' +datetime.now().strftime("%j-%H-%M-%S")+'/'+dir_name
+        cloned_experiment_dir = experiment_dir_parent + '/seq_len-' + str(seq_len) + '/'+dir_name
         print("Cloned experiment dir", cloned_experiment_dir)
         clone_experiment(experiment_dir, cloned_experiment_dir)
         loaded_model = PAR.load(cloned_experiment_dir + '/model/model.pkl')
