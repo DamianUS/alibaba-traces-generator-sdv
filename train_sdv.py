@@ -124,13 +124,12 @@ def main(args_params):
     generate_samples_from_model(experiment_parameters.seq_len, experiment_parameters.n_samples, experiment_root_directory_name, model)
 
 
-def generate_samples_from_model(seq_len,n_samples, experiment_root_directory_name, model):
+def generate_samples_from_model(seq_len, n_samples, experiment_root_directory_name, model):
     generated_data_directory_name = experiment_root_directory_name + "generated_data/"
     os.makedirs(generated_data_directory_name, exist_ok=True)
     for i in range(n_samples):
-        for seq_len_size in seq_len:
-            generated_sample = model.sample(sequence_length=seq_len_size)
-            save_sample_to_csv(generated_sample, generated_data_directory_name + "sample_" + str(i) + ".csv")
+        generated_sample = model.sample(sequence_length=seq_len)
+        save_sample_to_csv(generated_sample, generated_data_directory_name + "sample_" + str(i) + ".csv")
 
     print ("Samples saved in", generated_data_directory_name)
 
@@ -178,7 +177,6 @@ if __name__ == '__main__':
     parser.add_argument(
         '--seq_len',
         default=10,
-        nargs='+',
         type=int)
 
     args = parser.parse_args()
