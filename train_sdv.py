@@ -60,6 +60,26 @@ def initialize(trace):
                 "cycles_per_instruction": {
                     "column_index": 3
                 }
+            },
+            "metadata": {
+                "fields": {
+                    "cpu": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "mem": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "assigned_mem": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "cycles_per_instruction": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    }
+                }
             }
         }
     elif trace == 'azure_v2':
