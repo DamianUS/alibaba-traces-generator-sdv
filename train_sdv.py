@@ -6,22 +6,25 @@ import os
 from datetime import datetime
 import collections
 
+from datacentertracesdatasets import loadtraces
+
+
 
 def save_sample_to_csv(generated_sample, file_name):
     generated_sample.to_csv(file_name, header=False, index=False)
 
 
-def initialize(trace):
-    if trace == 'alibaba2018':
+def initialize(trace_name):
+    if trace_name == 'alibaba2018':
         dataset_info = {
-            "timestamp_frequency_secs": 10,
+            "timestamp_frequency_secs": 300,
             "column_config": {
-                "cpu": {
+                "cpu_util_percent": {
                     "column_index": 0,
                     "y_axis_min": 0,
                     "y_axis_max": 100
                 },
-                "mem": {
+                "mem_util_percent": {
                     "column_index": 1,
                     "y_axis_min": 0,
                     "y_axis_max": 100
@@ -35,10 +38,87 @@ def initialize(trace):
                     "column_index": 3,
                     "y_axis_min": 0,
                     "y_axis_max": 100
+                },
+                "disk_io_percent": {
+                    "column_index": 4,
+                    "y_axis_min": 0,
+                    "y_axis_max": 100
+                }
+
+            },
+            "metadata": {
+                "fields": {
+                    "cpu_util_percent": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "mem_util_percent": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "net_in": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "net_out": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "disk_io_percent": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    }
                 }
             }
         }
-    elif trace == 'google2019':
+    if trace_name == 'alibaba2018-4columns':
+        dataset_info = {
+            "timestamp_frequency_secs": 300,
+            "column_config": {
+                "mem_util_percent": {
+                    "column_index": 0,
+                    "y_axis_min": 0,
+                    "y_axis_max": 100
+                },
+                "net_in": {
+                    "column_index": 1,
+                    "y_axis_min": 0,
+                    "y_axis_max": 100
+                },
+                "net_out": {
+                    "column_index": 2,
+                    "y_axis_min": 0,
+                    "y_axis_max": 100
+                },
+                "disk_io_percent": {
+                    "column_index": 3,
+                    "y_axis_min": 0,
+                    "y_axis_max": 100
+                }
+
+            },
+            "metadata": {
+                "fields": {
+                    "mem_util_percent": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "net_in": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "net_out": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    },
+                    "disk_io_percent": {
+                        "type": "numerical",
+                        "subtype": "float"
+                    }
+                }
+            }
+        }
+    elif trace_name == 'google2019':
         dataset_info = {
             "timestamp_frequency_secs": 300,
             "column_config": {
@@ -82,7 +162,7 @@ def initialize(trace):
                 }
             }
         }
-    elif trace == 'azure_v2':
+    elif trace_name == 'azure_v2':
         dataset_info = {
             "timestamp_frequency_secs": 300,
             "column_config": {
@@ -106,7 +186,7 @@ def initialize(trace):
                 }
             }
         }
-    elif trace == 'reddit':
+    elif trace_name == 'reddit':
         dataset_info = {
             "timestamp_frequency_secs": 3600,
             "column_config": {
@@ -115,13 +195,18 @@ def initialize(trace):
                 }
             }
         }
-
     return dataset_info
+
 
 
 def main(args_params):
     dataset_info = initialize(args_params.trace)
     data = pd.read_csv(args_params.ori_data_filename, names=dataset_info['column_config'].keys())
+
+    if (args_params.ori_data_filename):
+        data = pd.read_csv(args_params.ori_data_filename, names=dataset_info['column_config'].keys())
+    else:
+        data = loadtraces.get_alibaba_2018_trace(stride_seconds = dataset_info['timestamp_frequency_secs'])
 
     field_types = dataset_info['metadata']['fields']
 
