@@ -4,7 +4,7 @@ import stat
 from datetime import datetime
 
 def generate_bash_file(commands, sh_name, trace_name):
-    sh_filename = f'../experiments_{trace_name}_{sh_name}_{datetime.now().strftime("%j-%Y-%H-%M")}.sh'
+    sh_filename = f'experiments_{trace_name}_{sh_name}_{datetime.now().strftime("%j-%Y-%H-%M")}.sh'
     sh_file = open(sh_filename, "w")
     sh_file.writelines(commands)
     st = os.stat(sh_filename)
