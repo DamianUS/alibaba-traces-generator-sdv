@@ -11,7 +11,7 @@ def generate_bash_file(commands, sh_name, trace_name):
     os.chmod(sh_filename, st.st_mode | stat.S_IEXEC)
 
 def generate_experiment_command(trace, sample_size, n_samples, seq_len, epochs, experiment_save_dir):
-   return f'python train.py --trace alibaba2018 --trace {trace} --sample_size {sample_size} --n_samples {n_samples} --seq_len {seq_len} --epochs {epochs} --experiment_save_dir {experiment_save_dir}\n'
+   return f'python train_sdv.py --trace alibaba2018 --trace {trace} --sample_size {sample_size} --n_samples {n_samples} --seq_len {seq_len} --epochs {epochs} --experiment_save_dir {experiment_save_dir}\n'
 
 sample_size = [1]
 n_samples = [10]
