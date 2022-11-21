@@ -201,8 +201,6 @@ def initialize(trace_name):
 
 def main(args_params):
     dataset_info = initialize(args_params.trace)
-    data = pd.read_csv(args_params.ori_data_filename, names=dataset_info['column_config'].keys())
-
     if (args_params.ori_data_filename):
         data = pd.read_csv(args_params.ori_data_filename, names=dataset_info['column_config'].keys())
     else:
