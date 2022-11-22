@@ -50,7 +50,7 @@ def generate_samples_from_model(seq_len, n_samples, experiment_root_directory_na
 
 
 def save_experiment_files(experiment_parameters, model, experiment_save_dir):
-    experiment_root_directory_name = f'{args.experiment_save_dir}/{experiment_parameters.data_name}_epochs-{experiment_parameters.iteration}-{datetime.now().strftime("%j-%Y-%H-%M")}/'
+    experiment_root_directory_name = f'{args.experiment_save_dir}/{experiment_parameters.data_name}_epochs_{experiment_parameters.iteration}_{datetime.now().strftime("%j-%Y-%H-%M")}/'
     model_directory_name = experiment_root_directory_name + "model/"
 
     os.makedirs(model_directory_name, exist_ok=True)
