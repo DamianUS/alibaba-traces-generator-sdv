@@ -8,8 +8,6 @@ import collections
 
 from datacentertracesdatasets import loadtraces
 
-from dataset_schema_loader import get_dataset_info
-
 
 def main(args_params):
     dataset_info = loadtraces.get_dataset_info(trace_name=args_params.trace, trace_type=args_params.trace_type, stride_seconds=args_params.trace_timestep)
