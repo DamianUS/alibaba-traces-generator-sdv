@@ -12,11 +12,11 @@ from dataset_schema_loader import get_dataset_info
 
 
 def main(args_params):
-    dataset_info = get_dataset_info(args_params.trace)
+    dataset_info = loadtraces.get_dataset_info(trace_name=args_params.trace, trace_type=args_params.trace_type, stride_seconds=args_params.trace_timestep)
     if (args_params.ori_data_filename):
         data = pd.read_csv(args_params.ori_data_filename, names=dataset_info['column_config'].keys())
     else:
-        data = loadtraces.get_alibaba_2018_trace(stride_seconds = dataset_info['timestamp_frequency_secs'])
+        data = loadtraces.get_trace(args_params.trace, trace_type=args_params.trace_type, stride_seconds=args_params.trace_timestep)
 
     field_types = dataset_info['metadata']['fields']
 
@@ -50,7 +50,7 @@ def generate_samples_from_model(seq_len, n_samples, experiment_root_directory_na
 
 
 def save_experiment_files(experiment_parameters, model, experiment_save_dir):
-    experiment_root_directory_name = f'{args.experiment_save_dir}/{experiment_parameters.data_name}_epochs_{experiment_parameters.iteration}_{datetime.now().strftime("%j-%Y-%H-%M")}/'
+    experiment_root_directory_name = f'{experiment_save_dir}/{experiment_parameters.data_name}_epochs_{experiment_parameters.iteration}_{datetime.now().strftime("%j-%Y-%H-%M")}/'
     model_directory_name = experiment_root_directory_name + "model/"
 
     os.makedirs(model_directory_name, exist_ok=True)
@@ -77,6 +77,14 @@ if __name__ == '__main__':
         default='azure_v2',
         type=str)
     parser.add_argument(
+        '--trace_timestep',
+        default='300',
+        type=int)
+    parser.add_argument(
+        '--trace_type',
+        default='machine_usage',
+        type=str)
+    parser.add_argument(
         '--sample_size',
         default=1,
         type=int)
@@ -90,7 +98,7 @@ if __name__ == '__main__':
         type=int)
     parser.add_argument(
         '--seq_len',
-        default=10,
+        default=288,
         type=int)
     parser.add_argument(
         '--experiment_save_dir',

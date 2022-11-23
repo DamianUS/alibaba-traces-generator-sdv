@@ -16,7 +16,7 @@ def generate_experiment_command(trace, sample_size, n_samples, seq_len, epochs, 
 sample_size = [1]
 n_samples = [10]
 seq_len = [288]
-epochs = [10, 50, 100, 200, 500]
+epochs = [1500, 2000]
 parameterization = [sample_size, n_samples, seq_len, epochs]
 
 experiment_save_dir = '~/experiments/sdv/alibaba2018/'
