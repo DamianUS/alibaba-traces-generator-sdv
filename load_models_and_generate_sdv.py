@@ -2,6 +2,8 @@ import argparse
 import os
 import shutil
 import traceback
+from time import sleep
+
 from tqdm import tqdm
 from distutils.dir_util import copy_tree
 from natsort import natsorted
@@ -50,8 +52,9 @@ def main(args_params):
                 experiment_directories.append(subdir)
         experiment_directories = natsorted(experiment_directories)
         for dir_name in tqdm(experiment_directories):
+            sleep(1)
             dir_name = os.path.basename(os.path.normpath(dir_name))
-            generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir, dir_name)
+            #generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir, dir_name)
         print(f'All models where loaded and data samples generated in {os.path.dirname(args_params.experiment_dir)}-seq_len-{args_params.seq_len}')
     else:
         generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir)
