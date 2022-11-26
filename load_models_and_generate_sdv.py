@@ -49,21 +49,21 @@ def main(args_params):
                 experiment_directories.append(subdir)
         experiment_directories = natsorted(experiment_directories)
         for dir_name in tqdm(experiment_directories):
-            experiment_dir = root_dir + dir_name
-            generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, experiment_dir, dir_name)
+            dir_name = os.path.basename(os.path.normpath(dir_name))
+            generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir, dir_name)
         print(f'All models where loaded and data samples generated in {os.path.dirname(args_params.experiment_dir)}-seq_len-{args_params.seq_len}')
     else:
         generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir)
 
-def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, experiment_dir, dir_name=''):
+def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, root_dir, dir_name=''):
     try:
-        experiment_dir_parent = os.path.dirname(experiment_dir)
+        experiment_dir_parent = os.path.dirname(root_dir)
         cloned_experiment_dir = f'{experiment_dir_parent}-seq_len-{seq_len}/{dir_name}'
-        clone_experiment(experiment_dir, cloned_experiment_dir)
+        clone_experiment(root_dir, cloned_experiment_dir)
         loaded_model = PAR.load(cloned_experiment_dir + '/model/model.pkl')
         generate_samples_from_model(seq_len, n_samples, cloned_experiment_dir, loaded_model)
     except Exception as e:
-        print('Error computing experiment dir:', experiment_dir)
+        print('Error computing experiment dir:', root_dir)
         print(e)
         traceback.print_exc()
 
