@@ -43,13 +43,12 @@ def remove_directory_files(directory_name):
 def main(args_params):
     root_dir = args_params.experiment_dir
     if args_params.recursive == 'true':
-        first_level_dirs = []
         experiment_directories = []
         for subdir, dirs, files in os.walk(root_dir):
             if 'model' in dirs:
                 experiment_directories.append(subdir)
         experiment_directories = natsorted(experiment_directories)
-        for dir_name in tqdm(first_level_dirs):
+        for dir_name in tqdm(experiment_directories):
             experiment_dir = root_dir + dir_name
             generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, experiment_dir, dir_name)
         print(f'All models where loaded and data samples generated in {os.path.dirname(args_params.experiment_dir)}-seq_len-{args_params.seq_len}')
