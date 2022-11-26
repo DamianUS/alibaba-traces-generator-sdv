@@ -51,7 +51,7 @@ def main(args_params):
             generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, experiment_dir, dir_name)
         print("\nAll models where loaded and data samples generated:\n")
     else:
-        generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir, dir_name)
+        generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir)
 
 def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, experiment_dir, dir_name):
     try:
