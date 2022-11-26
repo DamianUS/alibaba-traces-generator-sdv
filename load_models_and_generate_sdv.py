@@ -4,11 +4,12 @@ import shutil
 import traceback
 from tqdm import tqdm
 from distutils.dir_util import copy_tree
-from functools import partialmethod
 from natsort import natsorted
 
 
 from sdv.timeseries import PAR
+
+from sdv_generate_silenced import sdv_generate_sample_silenced
 
 
 def save_sample_to_csv(generated_sample, file_name):
@@ -72,9 +73,9 @@ def generate_samples_from_model(seq_len,n_samples, experiment_root_directory_nam
     generated_data_directory_name = experiment_root_directory_name + "/generated_data/"
     os.makedirs(generated_data_directory_name, exist_ok=True)
     for i in tqdm(range(n_samples), leave=False):
-        tqdm.__init__ = partialmethod(tqdm.__init__, disable=True)
-        generated_sample = model.sample(sequence_length=seq_len)
+        generated_sample = sdv_generate_sample_silenced(model, seq_len)
         save_sample_to_csv(generated_sample, generated_data_directory_name + "sample_" + str(i) + ".csv")
+
 
 if __name__ == '__main__':
     # Inputs for the main function
