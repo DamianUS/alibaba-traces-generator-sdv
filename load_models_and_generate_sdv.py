@@ -54,7 +54,7 @@ def main(args_params):
         for dir_name in tqdm(experiment_directories):
             sleep(1)
             dir_name = os.path.basename(os.path.normpath(dir_name))
-            #generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir, dir_name)
+            generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir, dir_name)
         print(f'All models where loaded and data samples generated in {os.path.dirname(args_params.experiment_dir)}-seq_len-{args_params.seq_len}')
     else:
         generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir)
@@ -76,8 +76,9 @@ def generate_samples_from_model(seq_len,n_samples, experiment_root_directory_nam
     generated_data_directory_name = experiment_root_directory_name + "/generated_data/"
     os.makedirs(generated_data_directory_name, exist_ok=True)
     for i in tqdm(range(n_samples), leave=False):
-        generated_sample = sdv_generate_sample_silenced(model, seq_len)
-        save_sample_to_csv(generated_sample, generated_data_directory_name + "sample_" + str(i) + ".csv")
+        j=i
+        #generated_sample = sdv_generate_sample_silenced(model, seq_len)
+        #save_sample_to_csv(generated_sample, generated_data_directory_name + "sample_" + str(i) + ".csv")
 
 
 if __name__ == '__main__':
