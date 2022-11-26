@@ -75,7 +75,7 @@ def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, root
 def generate_samples_from_model(seq_len,n_samples, experiment_root_directory_name, model):
     generated_data_directory_name = experiment_root_directory_name + "/generated_data/"
     os.makedirs(generated_data_directory_name, exist_ok=True)
-    for i in trange(n_samples, leave=False):
+    for i in trange(n_samples, colour='yellow', leave=False):
         sleep(0.2)
         #generated_sample = sdv_generate_sample_silenced(model, seq_len)
         #save_sample_to_csv(generated_sample, generated_data_directory_name + "sample_" + str(i) + ".csv")
