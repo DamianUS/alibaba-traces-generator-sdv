@@ -53,7 +53,7 @@ def main(args_params):
     else:
         generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir)
 
-def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, experiment_dir, dir_name):
+def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, experiment_dir, dir_name=''):
     try:
         experiment_dir_parent = os.path.dirname(experiment_dir)
         print("Processing directory ", experiment_dir)
