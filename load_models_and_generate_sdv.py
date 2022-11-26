@@ -2,7 +2,7 @@ import argparse
 import os
 import shutil
 import traceback
-from datetime import datetime
+from tqdm import tqdm
 from distutils.dir_util import copy_tree
 
 from sdv.timeseries import PAR
@@ -44,10 +44,8 @@ def main(args_params):
         for subdir, dirs, files in os.walk(root_dir):
             first_level_dirs = dirs
             break
-        for dir_name in first_level_dirs:
-            print("dir_name", dir_name)
+        for dir_name in tqdm(first_level_dirs):
             experiment_dir = root_dir + dir_name
-            print('experiment_dir', experiment_dir)
             generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, experiment_dir, dir_name)
         print("\nAll models where loaded and data samples generated:\n")
     else:
