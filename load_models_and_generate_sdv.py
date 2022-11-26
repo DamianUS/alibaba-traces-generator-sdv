@@ -59,7 +59,7 @@ def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, root
     try:
         experiment_dir_parent = os.path.dirname(root_dir)
         cloned_experiment_dir = f'{experiment_dir_parent}-seq_len-{seq_len}/{dir_name}'
-        clone_experiment(root_dir, cloned_experiment_dir)
+        clone_experiment(f'{experiment_dir_parent}/{dir_name}', cloned_experiment_dir)
         loaded_model = PAR.load(cloned_experiment_dir + '/model/model.pkl')
         generate_samples_from_model(seq_len, n_samples, cloned_experiment_dir, loaded_model)
     except Exception as e:
