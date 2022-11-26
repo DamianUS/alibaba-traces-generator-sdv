@@ -4,6 +4,7 @@ import shutil
 import traceback
 from tqdm import tqdm
 from distutils.dir_util import copy_tree
+from functools import partialmethod
 
 from sdv.timeseries import PAR
 
@@ -47,20 +48,17 @@ def main(args_params):
         for dir_name in tqdm(first_level_dirs):
             experiment_dir = root_dir + dir_name
             generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, experiment_dir, dir_name)
-        print("\nAll models where loaded and data samples generated:\n")
+        print(f'All models where loaded and data samples generated in {args_params.experiment_dir}-seq_len-{args_params.seq_len}')
     else:
         generate_new_experiment_samples_from_experiment_dir(args_params.seq_len, args_params.n_samples, root_dir)
 
 def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, experiment_dir, dir_name=''):
     try:
         experiment_dir_parent = os.path.dirname(experiment_dir)
-        print("Processing directory ", experiment_dir)
         cloned_experiment_dir = f'{experiment_dir_parent}-seq_len-{seq_len}/{dir_name}'
-        print("Cloned experiment dir", cloned_experiment_dir)
         clone_experiment(experiment_dir, cloned_experiment_dir)
         loaded_model = PAR.load(cloned_experiment_dir + '/model/model.pkl')
         generate_samples_from_model(seq_len, n_samples, cloned_experiment_dir, loaded_model)
-        print("Finished generation of samples in ", cloned_experiment_dir)
     except Exception as e:
         print('Error computing experiment dir:', experiment_dir)
         print(e)
@@ -70,11 +68,10 @@ def generate_new_experiment_samples_from_experiment_dir(seq_len, n_samples, expe
 def generate_samples_from_model(seq_len,n_samples, experiment_root_directory_name, model):
     generated_data_directory_name = experiment_root_directory_name + "/generated_data/"
     os.makedirs(generated_data_directory_name, exist_ok=True)
-    for i in range(n_samples):
+    for i in tqdm(n_samples, leave=False):
+        tqdm.__init__ = partialmethod(tqdm.__init__, disable=True)
         generated_sample = model.sample(sequence_length=seq_len)
         save_sample_to_csv(generated_sample, generated_data_directory_name + "sample_" + str(i) + ".csv")
-
-    print("Samples saved in", generated_data_directory_name)
 
 if __name__ == '__main__':
     # Inputs for the main function
