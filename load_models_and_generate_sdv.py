@@ -43,7 +43,7 @@ def remove_directory_files(directory_name):
 
 
 def main(args_params):
-    root_dir = args_params.experiment_dir
+    root_dir = f'{args_params.experiment_dir}/'
     if args_params.recursive == 'true':
         experiment_directories = []
         for subdir, dirs, files in os.walk(root_dir):
